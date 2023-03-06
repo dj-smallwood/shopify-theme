@@ -1,0 +1,28 @@
+<div class="collection-page mx-auto">
+
+  {% paginate collection.products by 9 %}
+    <h1 class="w-full">{{ collection.title }}</h1>
+    {% include 'breadcrumbs' %}
+    {% for product in collection.products %}
+      <div class="collection-card flex flex-col">
+        <a href="{{ product.url | within: collection }}">
+          <img src="{{ product.featured_image.src | img_url: '2048x' }}" alt="{{ product.featured_image.alt | escape }}" />
+        </a>
+        <div class="collection-card-details flex flex-col justify-center">
+          <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+          {{ product.price | money }}
+          {% unless product.available %}<br/><strong>sold out</strong>
+
+          {% endunless %}
+        </div>
+      </div>
+    {% else %}
+      <p>no matches</p>
+    {% endfor %}
+    <div class="pagination">
+      {% if paginate.pages > 1 %}
+        {{ paginate | default_pagination }}
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</div>

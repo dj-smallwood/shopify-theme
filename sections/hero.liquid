@@ -1,0 +1,30 @@
+<div class="container" style="background-image:{{ section.settings.background-img  }};">
+  <h1>{{ section.settings.hero-main-heading | escape }}</h1>
+  <a href="" class="btn btn-primary">Hello</a>
+</div>
+<h2>{{ settings.featured-collection }}</h2>
+{% schema %}
+  {
+    "name": "hero",
+    "class": "site-hero",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "background-img",
+        "label": "background Image"
+      }, {
+        "type": "text",
+        "id": "hero-main-heading",
+        "label": "Main Heading",
+        "default": "Hero Text"
+      }, {
+        "type": "collection",
+        "id": "featured-collection",
+        "label": "Featued Collection"
+
+      }
+
+
+    ]
+  }
+{% endschema %}

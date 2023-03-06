@@ -1,0 +1,19 @@
+// Variables
+$primary: #00d9aa;
+
+// import bootstrap
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+// styles
+
+.collection-card img {
+	max-width: 350px;
+}
+
+.nav {
+	ul {
+		list-style: none;
+		display: flex;
+
+	}
+}

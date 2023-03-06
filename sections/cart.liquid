@@ -1,0 +1,67 @@
+<div class="cart">
+  {% if cart.item_count > 0 %}
+    <h1>Order Summary</h1>
+    <form action="/cart" method="post" novalidate>
+      <ul>
+        {% for item in cart.items %}
+
+          <li>
+            <!-- image -->
+            <a class="cart-img-link" href="{{ item.url | within: collections.all }}">
+              <img class="cart-img" src="{{ item | img_url: '2048x' }}" alt="{{ item.title | escape }}"/>
+            </a>
+
+            <div class="cart-title-remove">
+              <a href="{{ item.url }}">{{ item.product.title }}</a>
+              <div class="cart-item-vartiants">
+                {% for option_title in item.product.options %}
+                  {{ option_title }} :
+                  <strong>{{ item.variant.options[forloop.index0] }}</strong>
+                  <br/>
+                {% endfor %}
+              </div>
+              <!-- remove -->
+              <a class="cart-remove" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">X</a>
+            </div>
+
+            <div class="cart-items-chart">
+              <!-- price -->
+              <div>
+                <h3>Price</h3>
+                {{ item.price | money }}
+              </div>
+              <!-- update -->
+              <div class="update-input">
+                <h3>Units</h3>
+                <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0"/>
+              </div>
+
+              <!-- subtotal for item -->
+              <div>
+                <h3>Item total</h3>
+                {% if item.original_line_price != item.line_price %}
+                  {{ item.original_line_price | money }}
+                {% endif %}
+                {{ item.line_price | money }}
+                {% for discount in item.discounts %}
+                  {{ discount.title }}
+                {% endfor %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="cart-bottom">
+        <h3>Subtotal:</h3>
+        <p>{{ cart.total_price | money }}</p>
+        <button class="btn btn-white" name="update" type="submit">Update</button>
+        <button class="btn btn-black" name="checkout" type="submit">
+          Checkout
+        </button>
+      </div>
+    </form>
+  {% else %}
+    <h2>cart</h2>
+    Cart is empty
+  {% endif %}
+</div>
